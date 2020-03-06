@@ -5,6 +5,7 @@ from glob import glob
 
 ## Dicrease color
 def dic_color(img):
+    "减色处理，参考6"
     img //= 63
     img = img * 64 + 32
     return img
@@ -12,7 +13,7 @@ def dic_color(img):
 ## Database
 def get_DB():
     # get image paths
-    train = glob("dataset/train_*")
+    train = glob("../dataset/train_*")
     train.sort()
 
     # prepare database
@@ -24,8 +25,15 @@ def get_DB():
         # get histogram
         for j in range(4):
             db[i, j] = len(np.where(img[..., 0] == (64 * j + 32))[0])
+            # db[0, 0] 第0张img 通道b 像素值为32的数量
+            # db[0, 1] 第0张img 通道b 像素值为96的数量
+            # db[0, 2] 第0张img 通道b 像素值为160的数量
+            # db[0, 3] 第0张img 通道b 像素值为224的数量
+
             db[i, j+4] = len(np.where(img[..., 1] == (64 * j + 32))[0])
             db[i, j+8] = len(np.where(img[..., 2] == (64 * j + 32))[0])
+
+            # 一幅图有12个值
 
         # get class
         if 'akahara' in path:
@@ -37,13 +45,14 @@ def get_DB():
         db[i, -1] = cls
 
         img_h = img.copy() // 64
+        print(img_h)
         img_h[..., 1] += 4
         img_h[..., 2] += 8
         plt.subplot(2, 5, i+1)
         plt.hist(img_h.ravel(), bins=12, rwidth=0.8)
         plt.title(path)
 
-    print(db)
+    # print(db)
     plt.show()
 
 # get database

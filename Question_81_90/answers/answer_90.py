@@ -11,9 +11,9 @@ def dic_color(img):
 
 
 # Database
-def get_DB():
+def get_DB(filesFrom="../dataset/train_*"):
     # get training image path
-    train = glob("dataset/train_*")
+    train = glob(filesFrom)
     train.sort()
 
     # prepare database
@@ -80,14 +80,35 @@ def k_means(db, pdb, Class=2, th=0.5):
             if int(feats[i, -1]) != pred:
                 change_count += 1
                 feats[i, -1] = pred
-
+                # update gravity
+                for i in range(Class):
+                    gs[i] = np.mean(feats[np.where(feats[..., -1] == i)[0], :12], axis=0)
+        print(change_count)
         if change_count < 1:
             break
 
     for i in range(db.shape[0]):
         print(pdb[i], " Pred:", feats[i, -1])
 
+    return gs
+
+
+def predict(gs):
+    t_db, t_pdb = get_DB(filesFrom="../dataset/test_*")
+    feats = t_db.copy()
+
+    for i in range(len(feats)):
+        # get distance each nearest graviry
+        dis = np.sqrt(np.sum(np.square(np.abs(gs - feats[i, :12])), axis=1))
+
+        # get new label
+        pred = np.argmin(dis, axis=0)
+        feats[i, -1] = pred
+
+    for i in range(t_db.shape[0]):
+        print("predict test img=>>>",t_pdb[i], " Pred:", feats[i, -1])
 
 db, pdb = get_DB()
-k_means(db, pdb, th=0.3)
+trained_gs = k_means(db, pdb, th=0.3)
+predict(trained_gs)
 

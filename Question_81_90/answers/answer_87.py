@@ -12,7 +12,7 @@ def dic_color(img):
 # Database
 def get_DB():
     # get training image path
-    train = glob("dataset/train_*")
+    train = glob("../dataset/train_*")
     train.sort()
 
     # prepare database
@@ -46,7 +46,7 @@ def get_DB():
 # test
 def test_DB(db, pdb, N=3):
     # get test image path
-    test = glob("dataset/test_*")
+    test = glob("../dataset/test_*")
     test.sort()
 
     accuracy_N = 0.

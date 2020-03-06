@@ -13,7 +13,7 @@ def dic_color(img):
 # Database
 def get_DB():
     # get training image path
-    train = glob("dataset/test_*")
+    train = glob("../dataset/test_*")
     train.sort()
 
     # prepare database
@@ -63,6 +63,7 @@ def k_means_step1(db, pdb, Class=2):
     gs = np.zeros((Class, 12), dtype=np.float32)
         
     # get gravity
+    # 计算随机分配类的直方图均值
     for i in range(Class):
         gs[i] = np.mean(feats[np.where(feats[..., -1] == i)[0], :12], axis=0)
     print("assigned label")

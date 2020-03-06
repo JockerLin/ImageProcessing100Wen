@@ -42,7 +42,7 @@ def Harris_corner_step1(img):
 		Ix2 = Ix ** 2
 		Iy2 = Iy ** 2
 		Ixy = Ix * Iy
-
+		# 三个大数组
 		return Ix2, Iy2, Ixy
 
 
@@ -83,6 +83,7 @@ def Harris_corner_step1(img):
 	Iy2 = gaussian_filtering(Iy2, K_size=3, sigma=3)
 	Ixy = gaussian_filtering(Ixy, K_size=3, sigma=3)
 
+	# 索贝尔与高斯后结果
 	# show result
 	plt.subplots_adjust(left=0, right=1, top=1, bottom=0, hspace=0, wspace=0.2)
 
@@ -106,7 +107,7 @@ def Harris_corner_step1(img):
 
 
 # Read image
-img = cv2.imread("thorino.jpg").astype(np.float32)
+img = cv2.imread("../thorino.jpg").astype(np.float32)
 
 # Harris corner detection step1
 out = Harris_corner_step1(img)

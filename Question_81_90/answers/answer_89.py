@@ -13,7 +13,7 @@ def dic_color(img):
 # Database
 def get_DB():
     # get training image path
-    train = glob("dataset/test_*")
+    train = glob("../dataset/test_*")
     train.sort()
 
     # prepare database
@@ -80,7 +80,7 @@ def k_means_step2(db, pdb, Class=2):
             if int(feats[i, -1]) != pred:
                 change_count += 1
                 feats[i, -1] = pred
-
+        print("change_count:", change_count)
         if change_count < 1:
             break
 
