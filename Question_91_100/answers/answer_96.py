@@ -35,7 +35,8 @@ def HOG(img):
         # get gradient angle
         gradient = np.arctan(gy / gx)
 
-        gradient[gradient < 0] = np.pi / 2 + gradient[gradient < 0] + np.pi / 2
+        gradient[gradient < 0] += np.pi
+        # gradient[gradient < 0] = np.pi / 2 + gradient[gradient < 0] + np.pi / 2
 
         return magnitude, gradient
 
@@ -57,6 +58,7 @@ def HOG(img):
     # get gradient histogram
     def gradient_histogram(gradient_quantized, magnitude, N=8):
         # get shape
+        # 128*128*256 => 16*16*9
         H, W = magnitude.shape
 
         # get cell num
@@ -73,13 +75,14 @@ def HOG(img):
 
         return histogram
 
-		# histogram normalization
+        # histogram normalization
+
     def normalization(histogram, C=3, epsilon=1):
         cell_N_H, cell_N_W, _ = histogram.shape
         ## each histogram
         for y in range(cell_N_H):
-    	    for x in range(cell_N_W):
-       	    #for i in range(9):
+            for x in range(cell_N_W):
+            #for i in range(9):
                 histogram[y, x] /= np.sqrt(np.sum(histogram[max(y - 1, 0) : min(y + 2, cell_N_H),
                                                             max(x - 1, 0) : min(x + 2, cell_N_W)] ** 2) + epsilon)
 
@@ -108,9 +111,9 @@ def HOG(img):
 
 # get IoU overlap ratio
 def iou(a, b):
-	# get area of a
+    # get area of a
     area_a = (a[2] - a[0]) * (a[3] - a[1])
-	# get area of b
+    # get area of b
     area_b = (b[2] - b[0]) * (b[3] - b[1])
 
 	# get left top x of IoU
@@ -320,10 +323,13 @@ def make_dataset(img, gt, Crop_N=200, L=60, th=0.5, H_size=32):
     return db
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float32)
-
+img = cv2.imread("../imori.jpg").astype(np.float32)
+import numpy as np
 # get HOG
 histogram = HOG(img)
+# import matplotlib.pyplot as plt
+# plt.hist(histogram[0][0])
+# plt.show()
 
 # prepare gt bounding box
 gt = np.array((47, 41, 129, 103), dtype=np.float32)

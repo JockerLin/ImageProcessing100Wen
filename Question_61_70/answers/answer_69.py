@@ -51,7 +51,6 @@ def HOG(img):
 
         return gradient_quantized
 
-
     # get gradient histogram
     def gradient_histogram(gradient_quantized, magnitude, N=8):
         # get shape
@@ -71,15 +70,15 @@ def HOG(img):
 
         return histogram
 
-		# histogram normalization
+        # histogram normalization
     def normalization(histogram, C=3, epsilon=1):
         cell_N_H, cell_N_W, _ = histogram.shape
         ## each histogram
         for y in range(cell_N_H):
-    	    for x in range(cell_N_W):
-       	    #for i in range(9):
-                histogram[y, x] /= np.sqrt(np.sum(histogram[max(y - 1, 0) : min(y + 2, cell_N_H),
-                                                            max(x - 1, 0) : min(x + 2, cell_N_W)] ** 2) + epsilon)
+            for x in range(cell_N_W):
+            #for i in range(9):
+                histogram[y, x] /= np.sqrt(np.sum(histogram[max(y - 1, 0): min(y + 2, cell_N_H),
+                                                            max(x - 1, 0): min(x + 2, cell_N_W)] ** 2) + epsilon)
 
         return histogram
 
@@ -115,9 +114,9 @@ def draw_HOG(img, histogram):
         # get shape
         H, W = gray.shape
         cell_N_H, cell_N_W, _ = histogram.shape
-        
+
         ## Draw
-        out = gray[1 : H + 1, 1 : W + 1].copy().astype(np.uint8)
+        out = gray[1: H + 1, 1: W + 1].copy().astype(np.uint8)
 
         for y in range(cell_N_H):
             for x in range(cell_N_W):
@@ -158,7 +157,7 @@ def draw_HOG(img, histogram):
     return out
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float32)
+img = cv2.imread("../imori.jpg").astype(np.float32)
 
 # get HOG
 histogram = HOG(img)
@@ -169,6 +168,7 @@ out = draw_HOG(img, histogram)
 
 # Save result
 cv2.imwrite("out.jpg", out)
+cv2.namedWindow("result", cv2.WINDOW_NORMAL)
 cv2.imshow("result", out)
 cv2.waitKey(0)
 cv2.destroyAllWindows()

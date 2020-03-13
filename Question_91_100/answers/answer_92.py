@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from glob import glob
 
+
 def k_means(img, Class=5):
     # get shape
     H, W, C = img.shape
@@ -59,7 +60,7 @@ def k_means(img, Class=5):
     return out
 
 # read image
-img = cv2.imread("imori.jpg").astype(np.float32)
+img = cv2.imread("../imori.jpg").astype(np.float32)
 
 # K-means
 out = k_means(img)

@@ -4,7 +4,7 @@ import numpy as np
 np.random.seed(0)
 
 # read image
-img = cv2.imread("imori_1.jpg")
+img = cv2.imread("../imori_1.jpg")
 H, W, C = img.shape
 
 # Grayscale
@@ -86,7 +86,7 @@ def resize(img, h, w):
     dy = y - iy
 
     out = (1-dx) * (1-dy) * img[iy, ix] + dx * (1 - dy) * img[iy, ix+1] + (1 - dx) * dy * img[iy+1, ix] + dx * dy * img[iy+1, ix+1]
-    out[out>255] = 255
+    out[out > 255] = 255
 
     return out
 
@@ -130,10 +130,12 @@ class NN:
         self.w1 -= self.lr * grad_w1
         self.b1 -= self.lr * grad_b1
 
+
 def sigmoid(x):
     return 1. / (1. + np.exp(-x))
 
 # crop and create database
+
 
 Crop_num = 200
 L = 60
@@ -173,7 +175,7 @@ for i in range(10000):
 
 
 # read detect target image
-img2 = cv2.imread("imori_many.jpg")
+img2 = cv2.imread("../imori_many.jpg")
 H2, W2, C2 = img2.shape
 
 # Grayscale
@@ -199,7 +201,7 @@ for y in range(0, H2, 4):
             region_hog = hog(region).ravel()
 
             score = nn.forward(region_hog)
-            if score >= 0.7:
+            if score >= 0.9:
                 cv2.rectangle(img2, (x1, y1), (x2, y2), (0,0,255), 1)
                 detects = np.vstack((detects, np.array((x1, y1, x2, y2, score))))
 

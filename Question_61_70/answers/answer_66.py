@@ -68,7 +68,7 @@ def HOG_step1(img):
 
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float32)
+img = cv2.imread("../imori.jpg").astype(np.float32)
 
 # get HOG step1
 magnitude, gradient_quantized = HOG_step1(img)
@@ -77,7 +77,7 @@ magnitude, gradient_quantized = HOG_step1(img)
 _magnitude = (magnitude / magnitude.max() * 255).astype(np.uint8)
 
 cv2.imwrite("out_mag.jpg", _magnitude)
-
+cv2.imshow("_magnitude", _magnitude)
 # Write gradient angle to file
 H, W, C = img.shape
 out = np.zeros((H, W, 3), dtype=np.uint8)

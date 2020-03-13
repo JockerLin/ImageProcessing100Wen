@@ -350,7 +350,7 @@ def sliding_window(img, nn, H_size=32, prob_th=0.7):
 
 
 # Read image
-img = cv2.imread("imori_1.jpg").astype(np.float32)
+img = cv2.imread("../imori_1.jpg").astype(np.float32)
 
 # prepare gt bounding box
 gt = np.array((47, 41, 129, 103), dtype=np.float32)
@@ -374,7 +374,7 @@ nn = train_nn(nn, train_x, train_t, iteration_N=10000)
 
 
 # read detect target image
-img2 = cv2.imread("imori_many.jpg")
+img2 = cv2.imread("../imori_many.jpg")
 
 # detection
 out = sliding_window(img2, nn)

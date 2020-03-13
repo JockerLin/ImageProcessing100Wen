@@ -209,7 +209,7 @@ def sliding_window(img, H_size=32):
 
 
 # read detect target image
-img = cv2.imread("imori_many.jpg")
+img = cv2.imread("../imori_many.jpg")
 
 sliding_window(img)
 

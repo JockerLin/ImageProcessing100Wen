@@ -65,7 +65,7 @@ def crop_bbox(img, gt, Crop_N=200, L=60, th=0.5):
     return img
 
 # read image
-img = cv2.imread("imori_1.jpg")
+img = cv2.imread("../imori_1.jpg")
 
 # gt bounding box
 gt = np.array((47, 41, 129, 103), dtype=np.float32)

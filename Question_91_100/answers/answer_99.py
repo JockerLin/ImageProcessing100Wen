@@ -4,7 +4,7 @@ import numpy as np
 np.random.seed(0)
 
 # read image
-img = cv2.imread("imori_1.jpg")
+img = cv2.imread("../imori_1.jpg")
 H, W, C = img.shape
 
 # Grayscale
@@ -13,6 +13,7 @@ gray = 0.2126 * img[..., 2] + 0.7152 * img[..., 1] + 0.0722 * img[..., 0]
 gt = np.array((47, 41, 129, 103), dtype=np.float32)
 
 cv2.rectangle(img, (gt[0], gt[1]), (gt[2], gt[3]), (0,255,255), 1)
+
 
 def iou(a, b):
     area_a = (a[2] - a[0]) * (a[3] - a[1])
@@ -68,6 +69,7 @@ def hog(gray):
 
     return Hist
 
+
 def resize(img, h, w):
     _h, _w  = img.shape
     ah = 1. * h / _h
@@ -89,8 +91,6 @@ def resize(img, h, w):
     out[out>255] = 255
 
     return out
-
-
 
 
 # crop and create database
@@ -165,11 +165,11 @@ class NN:
         self.w1 -= self.lr * grad_w1
         self.b1 -= self.lr * grad_b1
 
+
 def sigmoid(x):
     return 1. / (1. + np.exp(-x))
-    
 
-## training neural network
+##  training neural network
 nn = NN(ind=F_n, lr=0.01)
 for i in range(10000):
     nn.forward(db[:, :F_n])
@@ -177,7 +177,7 @@ for i in range(10000):
 
 
 # read detect target image
-img2 = cv2.imread("imori_many.jpg")
+img2 = cv2.imread("../imori_many.jpg")
 H2, W2, C2 = img2.shape
 
 # Grayscale
@@ -291,9 +291,10 @@ detects = detects[nms(detects, iou_th=0.25)]
 for d in detects:
     v = list(map(int, d[:4]))
     cv2.rectangle(img2, (v[0], v[1]), (v[2], v[3]), (0,0,255), 1)
-    cv2.putText(img2, "{:.2f}".format(d[-1]), (v[0], v[1]+9),
+    cv2.putText(img2, "{}".format(round(float(d[-1]), 3)), (v[0], v[1]+9),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255,0,255), 1)
 
-cv2.imwrite("out.jpg", img2)
+cv2.imwrite("out_4.jpg", img2)
+cv2.namedWindow("result", cv2.WINDOW_NORMAL)
 cv2.imshow("result", img2)
 cv2.waitKey(0)

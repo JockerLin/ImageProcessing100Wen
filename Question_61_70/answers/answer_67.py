@@ -90,11 +90,12 @@ def HOG_step2(img):
 
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float32)
+img = cv2.imread("../imori.jpg").astype(np.float32)
 
 # get HOG step2
 histogram = HOG_step2(img)
-                
+
+# 尺寸16*16*9 代表什么意思
 # write histogram to file
 for i in range(9):
     plt.subplot(3,3,i+1)

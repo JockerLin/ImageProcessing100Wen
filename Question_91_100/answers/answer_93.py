@@ -29,6 +29,7 @@ def iou(a, b):
     return iou
 
 # [x1, y1, x2, y2]
+
 a = np.array((50, 50, 150, 150), dtype=np.float32)
 
 b = np.array((60, 60, 170, 160), dtype=np.float32)

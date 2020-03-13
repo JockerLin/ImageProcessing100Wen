@@ -63,23 +63,25 @@ def HOG(img):
         histogram = np.zeros((cell_N_H, cell_N_W, 9), dtype=np.float32)
 
         # each pixel
+        temp_value = 4
         for y in range(cell_N_H):
             for x in range(cell_N_W):
                 for j in range(N):
                     for i in range(N):
-                        histogram[y, x, gradient_quantized[y * 4 + j, x * 4 + i]] += magnitude[y * 4 + j, x * 4 + i]
+                        histogram[y, x, gradient_quantized[y * temp_value + j, x * temp_value + i]] += \
+                            magnitude[y * temp_value + j, x * temp_value + i]
 
         return histogram
 
-		# histogram normalization
+        # histogram normalization
     def normalization(histogram, C=3, epsilon=1):
         cell_N_H, cell_N_W, _ = histogram.shape
         ## each histogram
         for y in range(cell_N_H):
-    	    for x in range(cell_N_W):
-       	    #for i in range(9):
-                histogram[y, x] /= np.sqrt(np.sum(histogram[max(y - 1, 0) : min(y + 2, cell_N_H),
-                                                            max(x - 1, 0) : min(x + 2, cell_N_W)] ** 2) + epsilon)
+            for x in range(cell_N_W):
+            #for i in range(9):
+                histogram[y, x] /= np.sqrt(np.sum(histogram[max(y - 1, 0): min(y + 2, cell_N_H),
+                                                            max(x - 1, 0): min(x + 2, cell_N_W)] ** 2) + epsilon)
 
         return histogram
 
@@ -105,14 +107,14 @@ def HOG(img):
 
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float32)
+img = cv2.imread("../imori.jpg").astype(np.float32)
 
 # get HOG
 histogram = HOG(img)
                 
 # Write result to file
 for i in range(9):
-    plt.subplot(3,3,i+1)
+    plt.subplot(3, 3, i+1)
     plt.imshow(histogram[..., i])
     plt.axis('off')
     plt.xticks(color="None")

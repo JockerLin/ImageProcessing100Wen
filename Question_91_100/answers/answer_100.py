@@ -4,7 +4,7 @@ import numpy as np
 np.random.seed(0)
 
 # read image
-img = cv2.imread("imori_1.jpg")
+img = cv2.imread("../imori_1.jpg")
 H, W, C = img.shape
 
 # Grayscale
@@ -175,7 +175,7 @@ for i in range(10000):
 
 
 # read detect target image
-img2 = cv2.imread("imori_many.jpg")
+img2 = cv2.imread("../imori_many.jpg")
 H2, W2, C2 = img2.shape
 
 # Grayscale
@@ -337,7 +337,7 @@ for i in range(len(detects)):
         cv2.rectangle(img2, (v[0], v[1]), (v[2], v[3]), (0,0,255), 1)
     else:
         cv2.rectangle(img2, (v[0], v[1]), (v[2], v[3]), (255,0,0), 1)
-    cv2.putText(img2, "{:.2f}".format(detects[i, -1]), (v[0], v[1]+9),
+    cv2.putText(img2, "{:.2f}".format(float(detects[i, -1])), (v[0], v[1]+9),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255,0,255), 1)
 
 for g in GT:

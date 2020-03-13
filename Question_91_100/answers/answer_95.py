@@ -32,6 +32,7 @@ class NN:
         return self.out
 
     def train(self, x, t):
+        # 计算损失函数 更新参数值
         # backpropagation output layer
         #En = t * np.log(self.out) + (1-t) * np.log(1-self.out)
         En = (self.out - t) * self.out * (1 - self.out)
@@ -76,17 +77,18 @@ def train_nn(nn, train_x, train_t, iteration_N=5000):
 
 
 # test
-def test_nn(nn, test_x, test_t):
+def test_nn(nn, test_x, test_t=None):
     for j in range(len(test_x)):
-        x = train_x[j]
-        t = train_t[j]
+        x = test_x[j]
+        # t = train_t[j]
         print("in:", x, "pred:", nn.forward(x))
 
 
 
 # train data
 train_x = np.array([[0,0], [0,1], [1,0], [1,1]], dtype=np.float32)
-
+print(train_x.shape)
+test_x = np.array([[0,1], [0,0], [1,1], [1,0], [1, 1], [0, 1]], dtype=np.float32)
 # train label data
 train_t = np.array([[0], [1], [1], [0]], dtype=np.float32)
 
@@ -97,4 +99,4 @@ nn = NN()
 nn = train_nn(nn, train_x, train_t, iteration_N=5000)
 
 # test
-test_nn(nn, train_x, train_t)
+test_nn(nn, test_x)
