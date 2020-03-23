@@ -27,7 +27,6 @@ def iou(a, b):
     iou = area_iou / (area_a + area_b - area_iou)
     return iou
 
-
 def hog(gray):
     h, w = gray.shape
     # Magnitude and gradient

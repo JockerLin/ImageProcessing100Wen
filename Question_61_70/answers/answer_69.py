@@ -71,6 +71,7 @@ def HOG(img):
         return histogram
 
         # histogram normalization
+        # 直方图归一化
     def normalization(histogram, C=3, epsilon=1):
         cell_N_H, cell_N_W, _ = histogram.shape
         ## each histogram
@@ -111,24 +112,30 @@ def draw_HOG(img, histogram):
         return gray
 
     def draw(gray, histogram, N=8):
+        """
+        绘制hog特征
+        """
         # get shape
         H, W = gray.shape
-        cell_N_H, cell_N_W, _ = histogram.shape
+        cell_N_H, cell_N_W, _ = histogram.shape  # 16,16,9
 
         ## Draw
         out = gray[1: H + 1, 1: W + 1].copy().astype(np.uint8)
 
         for y in range(cell_N_H):
             for x in range(cell_N_W):
+                # "每个9*1向量的特征"
                 cx = x * N + N // 2
                 cy = y * N + N // 2
+                # cx cy 代表第n个cell的中心 pixel 位置
                 x1 = cx + N // 2 - 1
                 y1 = cy
                 x2 = cx - N // 2 + 1
                 y2 = cy
-                
+                # x1 y1 cell中心线末端坐标
+                # x2 y2 cell中心线起点坐标
                 h = histogram[y, x] / np.sum(histogram[y, x])
-                h /= h.max()
+                h /= h.max() # 为了hog的角度越大 线段越黑色
         
                 for c in range(9):
                     #angle = (20 * c + 10 - 90) / 180. * np.pi
@@ -136,8 +143,9 @@ def draw_HOG(img, histogram):
                     angle = (20 * c + 10) / 180. * np.pi
                     rx = int(np.sin(angle) * (x1 - cx) + np.cos(angle) * (y1 - cy) + cx)
                     ry = int(np.cos(angle) * (x1 - cx) - np.cos(angle) * (y1 - cy) + cy)
-                    lx = int(np.sin(angle) * (x2 - cx) + np.cos(angle) * (y2 - cy) + cx)
+                    lx = int(np.sin(angle) * (x2 - cx ) + np.cos(angle) * (y2 - cy) + cx)
                     ly = int(np.cos(angle) * (x2 - cx) - np.cos(angle) * (y2 - cy) + cy)
+                    # 基于cell 中心点画线
 
                     # color is HOG value
                     c = int(255. * h[c])
@@ -168,7 +176,7 @@ out = draw_HOG(img, histogram)
 
 # Save result
 cv2.imwrite("out.jpg", out)
-cv2.namedWindow("result", cv2.WINDOW_NORMAL)
+cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
 cv2.imshow("result", out)
 cv2.waitKey(0)
 cv2.destroyAllWindows()

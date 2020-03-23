@@ -23,7 +23,7 @@ def nn_interpolate(img, ax=1, ay=1):
 
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float)
+img = cv2.imread("../imori.jpg").astype(np.float)
 
 # Nearest Neighbor
 out = nn_interpolate(img, ax=1.5, ay=1.5)

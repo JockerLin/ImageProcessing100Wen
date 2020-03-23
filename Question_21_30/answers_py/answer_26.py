@@ -41,12 +41,15 @@ def bl_interpolate(img, ax=1., ay=1.):
 
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float)
-
+img = cv2.imread("../imori.jpg").astype(np.float)
+img2 = cv2.imread("../imori.jpg")
 # Bilinear interpolation
 out = bl_interpolate(img, ax=1.5, ay=1.5)
-
+out2 = cv2.resize(src=img2, dsize=None, fx=1.5, fy=1.5, interpolation=cv2.INTER_LINEAR)
+cut_img = out-out2
 # Save result
 cv2.imshow("result", out)
+cv2.imshow("out2", out2)
+cv2.imshow("cut_img", cut_img)
 cv2.waitKey(0)
 cv2.imwrite("out.jpg", out)

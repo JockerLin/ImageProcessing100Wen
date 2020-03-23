@@ -5,6 +5,7 @@ np.random.seed(0)
 # neural network
 class NN:
     def __init__(self, ind=2, w=64, w2=64, outd=1, lr=0.1):
+        # 定义网络的结构
         # layer 1 weight
         self.w1 = np.random.normal(0, 1, [ind, w])
         # layer 1 bias
@@ -21,6 +22,7 @@ class NN:
         self.lr = lr
 
     def forward(self, x):
+        # 定义前向传播的过程
         # input tensor
         self.z1 = x
         # layer 1 output tensor
@@ -51,7 +53,7 @@ class NN:
         # update weight and bias
         self.w2 -= self.lr * grad_w2
         self.b2 -= self.lr * grad_b2
-        
+
         # get gradients for weight and bias
         grad_u1 = np.dot(grad_u2, self.w2.T) * self.z2 * (1 - self.z2)
         grad_w1 = np.dot(self.z1.T, grad_u1)
@@ -61,6 +63,7 @@ class NN:
         self.b1 -= self.lr * grad_b1
 
 # sigmoid
+# 非线性激活函数
 def sigmoid(x):
     return 1. / (1. + np.exp(-x))
 

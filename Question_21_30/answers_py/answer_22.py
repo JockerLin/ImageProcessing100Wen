@@ -20,14 +20,14 @@ def hist_mani(img, m0=128, s0=52):
 
 
 # Read image
-img = cv2.imread("imori_dark.jpg").astype(np.float)
+img = cv2.imread("../imori_dark.jpg").astype(np.float)
 
 out = hist_mani(img)
 
 # Display histogram
-plt.hist(out.ravel(), bins=255, rwidth=0.8, range=(0, 255))
-plt.savefig("out_his.png")
-plt.show()
+# plt.hist(out.ravel(), bins=255, rwidth=0.8, range=(0, 255))
+# plt.savefig("out_his.png")
+# plt.show()
 
 # Save result
 cv2.imshow("result", out)
